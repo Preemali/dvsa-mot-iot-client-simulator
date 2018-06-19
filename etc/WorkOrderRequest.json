@@ -1,0 +1,10 @@
+{
+  "siteNumber": "rbt-simulator",
+  "testNumber": "1",
+  "vehicle": {
+    "make": "Ford",
+    "model": "Capri 3.0S",
+    "vrm": "ABC 123M",
+    "vin": "12345678901234567"
+  }
+}
