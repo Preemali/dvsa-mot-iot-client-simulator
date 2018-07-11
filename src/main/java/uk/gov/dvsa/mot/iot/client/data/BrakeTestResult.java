@@ -1,5 +1,7 @@
 package uk.gov.dvsa.mot.iot.client.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,6 +83,21 @@ public class BrakeTestResult {
             this.parkingBrakeEfforts = new ArrayList<>();
         }
         this.parkingBrakeEfforts.add(parkingBrakeEffort);
+    }
+
+    @JsonIgnore
+    public BrakeEffort getFrontService(){
+        return getServiceBrakeEfforts().get(0);
+    }
+
+    @JsonIgnore
+    public BrakeEffort getRearService() {
+        return getServiceBrakeEfforts().get(1);
+    }
+
+    @JsonIgnore
+    public BrakeEffort getRearParking(){
+        return getParkingBrakeEfforts().get(0);
     }
 
     public enum BrakeTestType {

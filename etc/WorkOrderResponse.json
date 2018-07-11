@@ -34,26 +34,5 @@
       "offside": 403,
       "offsideLock": false
     }]
-  },
-  "frontService": {
-    "axleNumber": 1,
-    "nearside": 491,
-    "nearsideLock": false,
-    "offside": 490,
-    "offsideLock": false
-  },
-  "rearService": {
-    "axleNumber": 2,
-    "nearside": 405,
-    "nearsideLock": false,
-    "offside": 406,
-    "offsideLock": false
-  },
-  "rearParking": {
-    "axleNumber": 2,
-    "nearside": 392,
-    "nearsideLock": false,
-    "offside": 403,
-    "offsideLock": false
   }
 }

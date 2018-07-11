@@ -18,6 +18,10 @@ public class WorkOrder {
 
     private BrakeTestResult brakeTestResult;
 
+    private OBDTestResult obdTestResult;
+
+    private EmissionsTestResult emissionsTestResult;
+
     public WorkOrder() {
         setWorkOrderState(State.NEW);
     }
@@ -66,16 +70,20 @@ public class WorkOrder {
         this.brakeTestResult = brakeTestResult;
     }
 
-    public BrakeEffort getFrontService(){
-        return getBrakeTestResult().getServiceBrakeEfforts().get(0);
+    public OBDTestResult getObdTestResult() {
+        return obdTestResult;
     }
 
-    public BrakeEffort getRearService() {
-        return getBrakeTestResult().getServiceBrakeEfforts().get(1);
+    public void setObdTestResult(OBDTestResult obdTestResult) {
+        this.obdTestResult = obdTestResult;
     }
 
-    public BrakeEffort getRearParking(){
-        return getBrakeTestResult().getParkingBrakeEfforts().get(0);
+    public EmissionsTestResult getEmissionsTestResult() {
+        return emissionsTestResult;
+    }
+
+    public void setEmissionsTestResult(EmissionsTestResult emissionsTestResult) {
+        this.emissionsTestResult = emissionsTestResult;
     }
 
     public enum State {

@@ -1,30 +1,32 @@
-package uk.gov.dvsa.mot.iot;
+package uk.gov.dvsa.mot.iot.util;
 
-import uk.gov.dvsa.mot.iot.client.IotService;
-import uk.gov.dvsa.mot.iot.client.MessageListener;
+import uk.gov.dvsa.mot.iot.client.data.BrakeTestResult;
 import uk.gov.dvsa.mot.iot.client.data.Vehicle;
-import uk.gov.dvsa.mot.iot.client.data.WorkOrder;
-import uk.gov.dvsa.mot.iot.util.RandomRBTResultBuilder;
+import uk.gov.dvsa.mot.iot.util.builderhelpers.RandomRBTResultBuilder;
 
 /**
  * Roller Brake Test simulator, used only for testing and demonstration purposes
  */
-public class RBTSimulator implements MessageListener {
-    private static final String PROPERTY_FILE = "rbt-simulator.properties";
-    private IotService iotService;
+public class RBTSimulator {
 
-    @Override
-    public void onMessage(WorkOrder workOrder) {
+    private RBTSimulator() {
+    }
+
+    public static RBTSimulator anRBTSimulator(){
+        return new RBTSimulator();
+    }
+
+    public BrakeTestResult simulateTest(Vehicle vehicle) {
+
+        displayBanner();
 
         displayWorkOrderReceived();
 
-        displayVehicleDetails(workOrder.getVehicle());
+        displayVehicleDetails(vehicle);
 
         displayStartTest();
 
-        WorkOrder workOrderResponse = RandomRBTResultBuilder.aRandomRBTResult()
-                                            .withWorkOrderRequest(workOrder)
-                                            .build();
+        BrakeTestResult brakeTestResult = RandomRBTResultBuilder.aRandomRBTResult().build();
 
         pause(500);
 
@@ -34,37 +36,28 @@ public class RBTSimulator implements MessageListener {
         displayFrontAxle();
         pause(500);
         testing();
-        results(workOrderResponse.getFrontService().getNearside(), workOrderResponse.getFrontService().getOffside());
+        results(brakeTestResult.getFrontService().getNearside(), brakeTestResult.getFrontService().getOffside());
 
         displayRearAxle();
         pause(500);
         testing();
-        results(workOrderResponse.getRearService().getNearside(), workOrderResponse.getRearService().getOffside());
+        results(brakeTestResult.getRearService().getNearside(), brakeTestResult.getRearService().getOffside());
 
         displayParkingBrake();
 
         pause(500);
         testing();
-        results(workOrderResponse.getRearParking().getNearside(), workOrderResponse.getRearParking().getOffside());
+        results(brakeTestResult.getRearParking().getNearside(), brakeTestResult.getRearParking().getOffside());
 
         pause(500);
         displayEndTest();
 
         displaySendingResults();
 
-        diaplayTestResults(workOrderResponse);
+        displayTestResults(vehicle, brakeTestResult);
 
-        iotService.publish(workOrderResponse);
-    }
+        return brakeTestResult;
 
-    public static void main(String args[]) {
-        RBTSimulator rbtSimulator = new RBTSimulator();
-        rbtSimulator.start();
-    }
-
-    private void start() {
-        displayBanner();
-        iotService = new IotService(this, PROPERTY_FILE);
     }
 
     private void displayBanner(){
@@ -165,17 +158,17 @@ public class RBTSimulator implements MessageListener {
         );
     }
 
-    private void diaplayTestResults(WorkOrder workOrderResponse){
+    private void displayTestResults(Vehicle vehicle, BrakeTestResult brakeTestResult){
         System.out.println("ROLLER BRAKE TEST RESULTS:");
         System.out.println();
-        displayVehicleDetails(workOrderResponse.getVehicle());
+        displayVehicleDetails(vehicle);
         System.out.println("Presented Weight: ");
-        System.out.println(" " + workOrderResponse.getBrakeTestResult().getVehicleWeightKg() + "kg");
+        System.out.println(" " + brakeTestResult.getVehicleWeightKg() + "kg");
         System.out.println("Service Brake:");
-        results(workOrderResponse.getFrontService().getNearside(), workOrderResponse.getFrontService().getOffside());
-        results(workOrderResponse.getRearService().getNearside(), workOrderResponse.getRearService().getOffside());
+        results(brakeTestResult.getFrontService().getNearside(), brakeTestResult.getFrontService().getOffside());
+        results(brakeTestResult.getRearService().getNearside(), brakeTestResult.getRearService().getOffside());
         System.out.println("Parking Brake:");
-        results(workOrderResponse.getRearParking().getNearside(), workOrderResponse.getRearParking().getOffside());
+        results(brakeTestResult.getRearParking().getNearside(), brakeTestResult.getRearParking().getOffside());
         System.out.println();
         System.out.println("Result: PASS");
         System.out.println();

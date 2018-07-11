@@ -4,7 +4,7 @@ the MOT Inspection such as Roller Brake Testers (RBT), Onboard Diagnostics (OBD)
 
 It is NOT intended for production use.
 
-To use, first obtain the necessary files to replace the dummy rbt-simulator* files, then run RBTSimulator.
+To use, first obtain the necessary files to replace the dummy rbt-simulator* files, then run ConnectedEquipmentSimulator.
 
 A Demo of the RBT Simulator being used with PostMan can be found at https://www.youtube.com/watch?v=P7RDE0PJdik
 
