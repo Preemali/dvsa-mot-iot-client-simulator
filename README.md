@@ -2,12 +2,15 @@
 The purpose of this code is only to demonstrate and test the DVSA IoT API used to connect garage test equipment used for
 the MOT Inspection such as Roller Brake Testers (RBT), Onboard Diagnostics (OBD), Exhaust Gas Analysers (EGA) etc.
 
-It is NOT intended for production use.
+It is only for reference and is NOT intended for production use.
 
 Whilst this reference implementation is written in Java, there is no expectation or requirement to use this programming language in your own code. 
 The only practical limitation is to use a programming language that has an Amazon SDK available, see https://aws.amazon.com/tools/ for details.
 
-To use, first obtain the necessary files to replace the dummy rbt-simulator* files, then run ConnectedEquipmentSimulator.
+To use, first obtain the necessary files to replace the dummy rbt-simulator* files. The issued files will be named clientXX* where XX is a sequential number. 
+Copy the clientXX.cert.pem, clientXX.private.key and clientXX.public.key to your <ProjectRoot> directory and clientXX.properties 
+to <ProjectRoot>/src/main/resources/uk/gov/dvsa/mot/iot/util. Update the PROPERTY_FILE attribute in uk.gov.dvsa.mot.iot.ConnectedEquipmentSimulator 
+to match the issued property file name and then run ConnectedEquipmentSimulator.
 
 A Demo of the RBT Simulator being used with PostMan can be found at https://www.youtube.com/watch?v=P7RDE0PJdik
 
