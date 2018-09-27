@@ -13,7 +13,7 @@ import uk.gov.dvsa.mot.iot.util.RBTSimulator;
 public class ConnectedEquipmentSimulator implements MessageListener {
 
     //TODO: Update clientXX.properties to match property file issued by DVSA
-    private static final String PROPERTY_FILE = "clientXX.properties";
+    private static String PROPERTY_FILE = "clientXX.properties";
     private IotService iotService;
     private boolean rbtTest;
     private boolean obdTest;
@@ -79,6 +79,8 @@ public class ConnectedEquipmentSimulator implements MessageListener {
                 rbt = true;
                 obd = true;
                 ega = true;
+            } else if (arg.endsWith(".properties")){
+                PROPERTY_FILE = arg;
             }
         }
 

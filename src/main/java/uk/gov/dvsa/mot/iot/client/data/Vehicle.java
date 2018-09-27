@@ -1,5 +1,8 @@
 package uk.gov.dvsa.mot.iot.client.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Vehicle {
     private String make;
     private String model;

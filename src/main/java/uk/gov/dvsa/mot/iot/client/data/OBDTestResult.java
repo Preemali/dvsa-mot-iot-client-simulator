@@ -1,16 +1,34 @@
 package uk.gov.dvsa.mot.iot.client.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 
 /**
  * On Board Diagnostic Test Results
  * see https://en.wikipedia.org/wiki/OBD-II_PIDs for definition of Parameter IDs
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class OBDTestResult {
     /**
      * Vehicle Identification Number
      */
     private String vin;
+
+    /**
+     * Is the MIL lamp illuminated?
+     */
+    private boolean milOn;
+
+    /**
+     * List of confirmed emissions-related DTCs
+     */
+    private List<String> dtcs;
+
+    /**
+     * Number of confirmed emissions-related DTCs available for display.
+     */
+    private int dtcCount;
 
     /**
      * SPARK = Spark ignition monitors supported (e.g. Otto or Wankel engines)
@@ -92,21 +110,6 @@ public class OBDTestResult {
      * Periodic Compression Ignition Monitor - PM Filter
      */
     private MonitorStatus pmFilterMonitorStatus;
-
-    /**
-     * Is the MIL lamp illuminated?
-     */
-    private boolean milOn;
-
-    /**
-     * Number of confirmed emissions-related DTCs available for display.
-     */
-    private int dtcCount;
-
-    /**
-     * List of confirmed emissions-related DTCs
-     */
-    private List<String> dtcs;
 
     public String getVin() {
         return vin;
