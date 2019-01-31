@@ -1,130 +1,193 @@
 package uk.gov.dvsa.mot.iot.client.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class EmissionsTestResult {
 
-    private FuelType fuelType;
+    /* Vehicle under test */
+    private String vehicleMake;
+    private String vehicleModel;
+    private String vehicleVRM;
+    private BigInteger vehicleOdometerReading;
+    private Integer vehicleEngineSize;
+    private FuelType vehicleFuelType;
 
-    private Integer engineOilTemperature;
-    private Boolean visibleSmoke;           //TODO Can this be entered before or during test?
+    /* Test Time */
+    private LocalDateTime startDateTime;
 
-    /* Petrol & LPG */
-    private Boolean catalyst;
-    private Integer idleRPM;
-    private BigDecimal idleCO;
+    /* Engine Temperature - deg C */
+    private Integer engineTempMinLimit;
+    private Integer engineTempValue;
+    private TestResult engineTempTestResult;
 
-    private Integer fastIdleRPM;
-    private BigDecimal fastIdleCO;
-    private Integer fastIdleHC;
-    private BigDecimal fastIdleLambda;
+    /* Spark or Compression Test Results */
+    private SparkTestResult sparkTestResult;
+    private CompressionTestResult compressionTestResult;
 
-    /* Diesel */
-    private Boolean turbo;
-    private BigDecimal opacity;
+    /* Defaults or Manufacturers limits */
+    private LimitsUsed limitsUsed;
 
-    public FuelType getFuelType() {
-        return fuelType;
+    /* Overall Test Result */
+    private OverallTestResult overallTestResult;
+
+    /* Test Equipment details*/
+    private String softwareVersion;
+    private LocalDate calibrationDueDate;
+
+    public String getVehicleMake() {
+        return vehicleMake;
     }
 
-    public void setFuelType(FuelType fuelType) {
-        this.fuelType = fuelType;
+    public void setVehicleMake(String vehicleMake) {
+        this.vehicleMake = vehicleMake;
     }
 
-    public Integer getEngineOilTemperature() {
-        return engineOilTemperature;
+    public String getVehicleModel() {
+        return vehicleModel;
     }
 
-    public void setEngineOilTemperature(Integer engineOilTemperature) {
-        this.engineOilTemperature = engineOilTemperature;
+    public void setVehicleModel(String vehicleModel) {
+        this.vehicleModel = vehicleModel;
     }
 
-    public Boolean getVisibleSmoke() {
-        return visibleSmoke;
+    public String getVehicleVRM() {
+        return vehicleVRM;
     }
 
-    public void setVisibleSmoke(Boolean visibleSmoke) {
-        this.visibleSmoke = visibleSmoke;
+    public void setVehicleVRM(String vehicleVRM) {
+        this.vehicleVRM = vehicleVRM;
     }
 
-    public Boolean getCatalyst() {
-        return catalyst;
+    public BigInteger getVehicleOdometerReading() {
+        return vehicleOdometerReading;
     }
 
-    public void setCatalyst(Boolean catalyst) {
-        this.catalyst = catalyst;
+    public void setVehicleOdometerReading(BigInteger vehicleOdometerReading) {
+        this.vehicleOdometerReading = vehicleOdometerReading;
     }
 
-    public Integer getIdleRPM() {
-        return idleRPM;
+    public Integer getVehicleEngineSize() {
+        return vehicleEngineSize;
     }
 
-    public void setIdleRPM(Integer idleRPM) {
-        this.idleRPM = idleRPM;
+    public void setVehicleEngineSize(Integer vehicleEngineSize) {
+        this.vehicleEngineSize = vehicleEngineSize;
     }
 
-    public BigDecimal getIdleCO() {
-        return idleCO;
+    public FuelType getVehicleFuelType() {
+        return vehicleFuelType;
     }
 
-    public void setIdleCO(BigDecimal idleCO) {
-        this.idleCO = idleCO;
+    public void setVehicleFuelType(FuelType vehicleFuelType) {
+        this.vehicleFuelType = vehicleFuelType;
     }
 
-    public Integer getFastIdleRPM() {
-        return fastIdleRPM;
+    public String getStartDateTime() {
+        return startDateTime.toString();
     }
 
-    public void setFastIdleRPM(Integer fastIdleRPM) {
-        this.fastIdleRPM = fastIdleRPM;
+    public void setStartDateTime(LocalDateTime startDateTime) {
+        this.startDateTime = startDateTime;
     }
 
-    public BigDecimal getFastIdleCO() {
-        return fastIdleCO;
+    public Integer getEngineTempMinLimit() {
+        return engineTempMinLimit;
     }
 
-    public void setFastIdleCO(BigDecimal fastIdleCO) {
-        this.fastIdleCO = fastIdleCO;
+    public void setEngineTempMinLimit(Integer engineTempMinLimit) {
+        this.engineTempMinLimit = engineTempMinLimit;
     }
 
-    public Integer getFastIdleHC() {
-        return fastIdleHC;
+    public Integer getEngineTempValue() {
+        return engineTempValue;
     }
 
-    public void setFastIdleHC(Integer fastIdleHC) {
-        this.fastIdleHC = fastIdleHC;
+    public void setEngineTempValue(Integer engineTempValue) {
+        this.engineTempValue = engineTempValue;
     }
 
-    public BigDecimal getFastIdleLambda() {
-        return fastIdleLambda;
+    public TestResult getEngineTempTestResult() {
+        return engineTempTestResult;
     }
 
-    public void setFastIdleLambda(BigDecimal fastIdleLambda) {
-        this.fastIdleLambda = fastIdleLambda;
+    public void setEngineTempTestResult(TestResult engineTempTestResult) {
+        this.engineTempTestResult = engineTempTestResult;
     }
 
-    public Boolean getTurbo() {
-        return turbo;
+    public SparkTestResult getSparkTestResult() {
+        return sparkTestResult;
     }
 
-    public void setTurbo(Boolean turbo) {
-        this.turbo = turbo;
+    public void setSparkTestResult(SparkTestResult sparkTestResult) {
+        this.sparkTestResult = sparkTestResult;
     }
 
-    public BigDecimal getOpacity() {
-        return opacity;
+    public CompressionTestResult getCompressionTestResult() {
+        return compressionTestResult;
     }
 
-    public void setOpacity(BigDecimal opacity) {
-        this.opacity = opacity;
+    public void setCompressionTestResult(CompressionTestResult compressionTestResult) {
+        this.compressionTestResult = compressionTestResult;
+    }
+
+    public OverallTestResult getOverallTestResult() {
+        return overallTestResult;
+    }
+
+    public void setOverallTestResult(OverallTestResult overallTestResult) {
+        this.overallTestResult = overallTestResult;
+    }
+
+    public LimitsUsed getLimitsUsed() {
+        return limitsUsed;
+    }
+
+    public void setLimitsUsed(LimitsUsed limitsUsed) {
+        this.limitsUsed = limitsUsed;
+    }
+
+    public String getSoftwareVersion() {
+        return softwareVersion;
+    }
+
+    public void setSoftwareVersion(String softwareVersion) {
+        this.softwareVersion = softwareVersion;
+    }
+
+    public LocalDate getCalibrationDueDate() {
+        return calibrationDueDate;
+    }
+
+    public void setCalibrationDueDate(LocalDate calibrationDueDate) {
+        this.calibrationDueDate = calibrationDueDate;
     }
 
     public enum FuelType{
         PETROL,
         DIESEL,
         LPG
+    }
+
+    public enum LimitsUsed{
+        DEFAULT,
+        MANUFACTURER
+    }
+
+    public enum TestResult {
+        PASS,
+        FAIL,
+        NOT_MEASURED
+    }
+
+    public enum OverallTestResult {
+        PASSED,
+        FAILED
     }
 }

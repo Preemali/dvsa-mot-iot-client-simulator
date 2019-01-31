@@ -3,18 +3,23 @@ package uk.gov.dvsa.mot.iot.util.builderhelpers;
 import uk.gov.dvsa.mot.iot.client.data.BrakeEffort;
 import uk.gov.dvsa.mot.iot.client.data.BrakeTestResult;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Objects.isNull;
 
 public final class BrakeTestResultBuilder {
-    private BrakeTestResult.BrakeTestType serviceBrakeTestType;
-    private BrakeTestResult.BrakeTestType parkingBrakeTestType;
-    private BrakeTestResult.VehicleWeightType vehicleWeightType;
+    private BrakeTestResult.BrakeTestType serviceBrakeTestType = BrakeTestResult.BrakeTestType.ROLLER;
+    private BrakeTestResult.BrakeTestType parkingBrakeTestType = BrakeTestResult.BrakeTestType.ROLLER;
+    private BrakeTestResult.VehicleWeightType vehicleWeightType = BrakeTestResult.VehicleWeightType.PRESENTED;
     private Integer vehicleWeightKg;
     private List<BrakeEffort> serviceBrakeEfforts;
     private List<BrakeEffort> parkingBrakeEfforts;
+    private BrakeTestResult.BrakeLineType brakeLineType;
+    private BigDecimal serviceBrakeEfficiency;
+    private BigDecimal parkingBrakeEfficiency;
+
 
     private BrakeTestResultBuilder() {
     }
@@ -59,6 +64,21 @@ public final class BrakeTestResultBuilder {
         return this;
     }
 
+    public BrakeTestResultBuilder withServiceBrakeEfficiency(BigDecimal serviceBrakeEfficiency){
+        this.serviceBrakeEfficiency = serviceBrakeEfficiency;
+        return this;
+    }
+
+    public BrakeTestResultBuilder withParkingBrakeEfficiency(BigDecimal parkingBrakeEfficiency){
+        this.parkingBrakeEfficiency = parkingBrakeEfficiency;
+        return this;
+    }
+
+    public BrakeTestResultBuilder withBrakeLineType(BrakeTestResult.BrakeLineType brakeLineType){
+        this.brakeLineType = brakeLineType;
+        return this;
+    }
+
     public BrakeTestResult build() {
         BrakeTestResult brakeTestResult = new BrakeTestResult();
         brakeTestResult.setServiceBrakeTestType(serviceBrakeTestType);
@@ -67,6 +87,9 @@ public final class BrakeTestResultBuilder {
         brakeTestResult.setVehicleWeightKg(vehicleWeightKg);
         brakeTestResult.setServiceBrakeEfforts(serviceBrakeEfforts);
         brakeTestResult.setParkingBrakeEfforts(parkingBrakeEfforts);
+        brakeTestResult.setServiceBrakeEfficiency(serviceBrakeEfficiency);
+        brakeTestResult.setParkingBrakeEfficiency(parkingBrakeEfficiency);
+        brakeTestResult.setBrakeLineType(brakeLineType);
         return brakeTestResult;
     }
 }

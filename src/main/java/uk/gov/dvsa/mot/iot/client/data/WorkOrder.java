@@ -1,16 +1,15 @@
 package uk.gov.dvsa.mot.iot.client.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class WorkOrder {
 
     private String siteNumber;
 
-    private Long testNumber;
+    private String testNumber;
 
     private State workOrderState;
 
@@ -46,11 +45,11 @@ public class WorkOrder {
         this.workOrderState = workOrderState;
     }
 
-    public Long getTestNumber() {
+    public String getTestNumber() {
         return testNumber;
     }
 
-    public void setTestNumber(Long testNumber) {
+    public void setTestNumber(String testNumber) {
         this.testNumber = testNumber;
     }
 

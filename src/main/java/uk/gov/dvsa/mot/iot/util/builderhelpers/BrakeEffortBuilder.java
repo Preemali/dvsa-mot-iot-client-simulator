@@ -5,9 +5,9 @@ import uk.gov.dvsa.mot.iot.client.data.BrakeEffort;
 public final class BrakeEffortBuilder {
     private Integer axleNumber;
     private Integer nearside;
-    private Boolean nearsideLock;
+    private Boolean nearsideLock = Boolean.FALSE;
     private Integer offside;
-    private Boolean offsideLock;
+    private Boolean offsideLock = Boolean.FALSE;
 
     private BrakeEffortBuilder() {
     }

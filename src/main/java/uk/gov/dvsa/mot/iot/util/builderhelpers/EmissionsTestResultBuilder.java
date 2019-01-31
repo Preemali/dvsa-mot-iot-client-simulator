@@ -1,24 +1,37 @@
 package uk.gov.dvsa.mot.iot.util.builderhelpers;
 
+import uk.gov.dvsa.mot.iot.client.data.CompressionTestResult;
 import uk.gov.dvsa.mot.iot.client.data.EmissionsTestResult;
+import uk.gov.dvsa.mot.iot.client.data.SparkTestResult;
 
-import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public final class EmissionsTestResultBuilder {
-    private EmissionsTestResult.FuelType fuelType;
-    private Integer engineOilTemperature;
-    private Boolean visibleSmoke;
-    /* Petrol & LPG */
-    private Boolean catalyst;
-    private Integer idleRPM;
-    private BigDecimal idleCO;
-    private Integer fastIdleRPM;
-    private BigDecimal fastIdleCO;
-    private Integer fastIdleHC;
-    private BigDecimal fastIdleLambda;
-    /* Diesel */
-    private Boolean turbo;
-    private BigDecimal opacity;
+    /* Vehicle under test */
+    private String vehicleManufacturer;
+    private String vehicleModel;
+    private String vehicleRegistrationNumber;
+    private BigInteger vehicleOdometerReading;
+    private Integer engineSize;
+    private EmissionsTestResult.FuelType vehicleFuelType;
+    /* Test Time */
+    private LocalDateTime startDateTime;
+    /* Engine Temperature - deg C */
+    private Integer engineTempMinLimit;
+    private Integer engineTempValue;
+    private EmissionsTestResult.TestResult engineTempTestResult;
+    /* Visible Smoke */
+    /* Spark or Compression Test Results */
+    private SparkTestResult sparkTestResult;
+    private CompressionTestResult compressionTestResult;
+    /* Overall Test Result */
+    private EmissionsTestResult.OverallTestResult overallTestResult;
+    /* Test Equipment details*/
+    private String softwareVersion;
+    private LocalDate calibrationDueDate;
+    private EmissionsTestResult.LimitsUsed limitsUsed;
 
     private EmissionsTestResultBuilder() {
     }
@@ -27,80 +40,104 @@ public final class EmissionsTestResultBuilder {
         return new EmissionsTestResultBuilder();
     }
 
-    public EmissionsTestResultBuilder withFuelType(EmissionsTestResult.FuelType fuelType) {
-        this.fuelType = fuelType;
+    public EmissionsTestResultBuilder withVehicleManufacturer(String vehicleManufacturer) {
+        this.vehicleManufacturer = vehicleManufacturer;
         return this;
     }
 
-    public EmissionsTestResultBuilder withEngineOilTemperature(Integer engineOilTemperature) {
-        this.engineOilTemperature = engineOilTemperature;
+    public EmissionsTestResultBuilder withVehicleModel(String vehicleModel) {
+        this.vehicleModel = vehicleModel;
         return this;
     }
 
-    public EmissionsTestResultBuilder withVisibleSmoke(Boolean visibleSmoke) {
-        this.visibleSmoke = visibleSmoke;
+    public EmissionsTestResultBuilder withVehicleRegistrationNumber(String vehicleRegistrationNumber) {
+        this.vehicleRegistrationNumber = vehicleRegistrationNumber;
         return this;
     }
 
-    public EmissionsTestResultBuilder withCatalyst(Boolean catalyst) {
-        this.catalyst = catalyst;
+    public EmissionsTestResultBuilder withVehicleOdometerReading(BigInteger vehicleOdometerReading) {
+        this.vehicleOdometerReading = vehicleOdometerReading;
         return this;
     }
 
-    public EmissionsTestResultBuilder withIdleRPM(Integer idleRPM) {
-        this.idleRPM = idleRPM;
+    public EmissionsTestResultBuilder withEngineSize(Integer engineSize) {
+        this.engineSize = engineSize;
         return this;
     }
 
-    public EmissionsTestResultBuilder withIdleCO(BigDecimal idleCO) {
-        this.idleCO = idleCO;
+    public EmissionsTestResultBuilder withVehicleFuelType(EmissionsTestResult.FuelType vehicleFuelType) {
+        this.vehicleFuelType = vehicleFuelType;
         return this;
     }
 
-    public EmissionsTestResultBuilder withFastIdleRPM(Integer fastIdleRPM) {
-        this.fastIdleRPM = fastIdleRPM;
+    public EmissionsTestResultBuilder withStartDateTime(LocalDateTime startDateTime) {
+        this.startDateTime = startDateTime;
         return this;
     }
 
-    public EmissionsTestResultBuilder withFastIdleCO(BigDecimal fastIdleCO) {
-        this.fastIdleCO = fastIdleCO;
+    public EmissionsTestResultBuilder withEngineTempMinLimit(Integer engineTempMinLimit) {
+        this.engineTempMinLimit = engineTempMinLimit;
         return this;
     }
 
-    public EmissionsTestResultBuilder withFastIdleHC(Integer fastIdleHC) {
-        this.fastIdleHC = fastIdleHC;
+    public EmissionsTestResultBuilder withEngineTempValue(Integer engineTempValue) {
+        this.engineTempValue = engineTempValue;
         return this;
     }
 
-    public EmissionsTestResultBuilder withFastIdleLambda(BigDecimal fastIdleLambda) {
-        this.fastIdleLambda = fastIdleLambda;
+    public EmissionsTestResultBuilder withEngineTempTestResult(EmissionsTestResult.TestResult engineTempTestResult) {
+        this.engineTempTestResult = engineTempTestResult;
         return this;
     }
 
-    public EmissionsTestResultBuilder withTurbo(Boolean turbo) {
-        this.turbo = turbo;
+    public EmissionsTestResultBuilder withSparkTestResult(SparkTestResult sparkTestResult) {
+        this.sparkTestResult = sparkTestResult;
         return this;
     }
 
-    public EmissionsTestResultBuilder withOpacity(BigDecimal opacity) {
-        this.opacity = opacity;
+    public EmissionsTestResultBuilder withCompressionTestResult(CompressionTestResult compressionTestResult) {
+        this.compressionTestResult = compressionTestResult;
+        return this;
+    }
+
+    public EmissionsTestResultBuilder withOverallTestResult(EmissionsTestResult.OverallTestResult overallTestResult) {
+        this.overallTestResult = overallTestResult;
+        return this;
+    }
+
+    public EmissionsTestResultBuilder withSoftwareVersion(String softwareVersion) {
+        this.softwareVersion = softwareVersion;
+        return this;
+    }
+
+    public EmissionsTestResultBuilder withCalibrationDueDate(LocalDate calibrationDueDate) {
+        this.calibrationDueDate = calibrationDueDate;
+        return this;
+    }
+
+    public EmissionsTestResultBuilder withLimitsUsed(EmissionsTestResult.LimitsUsed limitsUsed) {
+        this.limitsUsed = limitsUsed;
         return this;
     }
 
     public EmissionsTestResult build() {
         EmissionsTestResult emissionsTestResult = new EmissionsTestResult();
-        emissionsTestResult.setFuelType(fuelType);
-        emissionsTestResult.setEngineOilTemperature(engineOilTemperature);
-        emissionsTestResult.setVisibleSmoke(visibleSmoke);
-        emissionsTestResult.setCatalyst(catalyst);
-        emissionsTestResult.setIdleRPM(idleRPM);
-        emissionsTestResult.setIdleCO(idleCO);
-        emissionsTestResult.setFastIdleRPM(fastIdleRPM);
-        emissionsTestResult.setFastIdleCO(fastIdleCO);
-        emissionsTestResult.setFastIdleHC(fastIdleHC);
-        emissionsTestResult.setFastIdleLambda(fastIdleLambda);
-        emissionsTestResult.setTurbo(turbo);
-        emissionsTestResult.setOpacity(opacity);
+        emissionsTestResult.setVehicleMake(vehicleManufacturer);
+        emissionsTestResult.setVehicleModel(vehicleModel);
+        emissionsTestResult.setVehicleVRM(vehicleRegistrationNumber);
+        emissionsTestResult.setVehicleOdometerReading(vehicleOdometerReading);
+        emissionsTestResult.setVehicleEngineSize(engineSize);
+        emissionsTestResult.setVehicleFuelType(vehicleFuelType);
+        emissionsTestResult.setStartDateTime(startDateTime);
+        emissionsTestResult.setEngineTempMinLimit(engineTempMinLimit);
+        emissionsTestResult.setEngineTempValue(engineTempValue);
+        emissionsTestResult.setEngineTempTestResult(engineTempTestResult);
+        emissionsTestResult.setSparkTestResult(sparkTestResult);
+        emissionsTestResult.setCompressionTestResult(compressionTestResult);
+        emissionsTestResult.setOverallTestResult(overallTestResult);
+        emissionsTestResult.setSoftwareVersion(softwareVersion);
+        emissionsTestResult.setCalibrationDueDate(calibrationDueDate);
+        emissionsTestResult.setLimitsUsed(limitsUsed);
         return emissionsTestResult;
     }
 }

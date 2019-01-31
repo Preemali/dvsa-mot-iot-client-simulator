@@ -1,6 +1,7 @@
 package uk.gov.dvsa.mot.iot.client.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;
 
@@ -9,7 +10,13 @@ import java.util.List;
  * see https://en.wikipedia.org/wiki/OBD-II_PIDs for definition of Parameter IDs
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OBDTestResult {
+    /**
+     * Vehicle odometer reading in miles
+     */
+    private String odometer;
+
     /**
      * Vehicle Identification Number
      */
@@ -110,6 +117,14 @@ public class OBDTestResult {
      * Periodic Compression Ignition Monitor - PM Filter
      */
     private MonitorStatus pmFilterMonitorStatus;
+
+    public String getOdometer() {
+        return odometer;
+    }
+
+    public void setOdometer(String odometer) {
+        this.odometer = odometer;
+    }
 
     public String getVin() {
         return vin;

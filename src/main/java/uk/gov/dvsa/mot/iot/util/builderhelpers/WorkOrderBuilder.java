@@ -6,7 +6,7 @@ import uk.gov.dvsa.mot.iot.client.data.WorkOrder;
 
 public final class WorkOrderBuilder {
     private String siteNumber;
-    private Long testNumber;
+    private String testNumber;
     private WorkOrder.State workOrderState;
     private Vehicle vehicle;
     private BrakeTestResult brakeTestResult;
@@ -23,7 +23,7 @@ public final class WorkOrderBuilder {
         return this;
     }
 
-    public WorkOrderBuilder withTestNumber(Long testNumber) {
+    public WorkOrderBuilder withTestNumber(String testNumber) {
         this.testNumber = testNumber;
         return this;
     }

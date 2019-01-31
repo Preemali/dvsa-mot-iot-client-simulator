@@ -59,8 +59,15 @@ public class IotService {
             siteNumber = clientId;
         }
 
-        topicIn = "mot/in/" + siteNumber;
-        topicOut = "mot/out/" + siteNumber;
+        String topicPrefix = iotUtil.getConfig("topicPrefix");
+        if(topicPrefix == null){
+            topicPrefix = "mot"; //original default value
+        }
+
+        topicIn = topicPrefix + "/in/" + siteNumber;
+        topicOut = topicPrefix + "/out/" + siteNumber;
+
+        LOGGER.info("Connecting to siteNumber " + siteNumber + " at " + clientEndpoint);
 
         String certificateFile = iotUtil.getConfig("certificateFile");
         String privateKeyFile = iotUtil.getConfig("privateKeyFile");
@@ -111,7 +118,9 @@ public class IotService {
                 String json = message.getStringPayload();
                 LOGGER.info("Received Message: " + json);
                 WorkOrder workOrder = objectMapper.readValue(json, WorkOrder.class);
-                messageListener.onMessage(workOrder);
+                if(workOrder.getWorkOrderState().equals(WorkOrder.State.NEW)){
+                    messageListener.onMessage(workOrder);
+                }
             } catch (IOException e) {
                 LOGGER.severe("Error " + e.getMessage() + " processing message " + message.getStringPayload());
             }

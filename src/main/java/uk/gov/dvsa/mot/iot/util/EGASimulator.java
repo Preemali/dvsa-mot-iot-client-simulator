@@ -2,7 +2,7 @@ package uk.gov.dvsa.mot.iot.util;
 
 import uk.gov.dvsa.mot.iot.client.data.EmissionsTestResult;
 import uk.gov.dvsa.mot.iot.client.data.Vehicle;
-import uk.gov.dvsa.mot.iot.util.builderhelpers.RandomEGATestResultBuilder;
+import uk.gov.dvsa.mot.iot.util.builderhelpers.EGATestResultBuilder;
 
 public class EGASimulator {
 
@@ -13,9 +13,19 @@ public class EGASimulator {
         return new EGASimulator();
     }
 
-    public EmissionsTestResult simulateTest(Vehicle vehicle){
+    public static EGATestCase parseEGATestCase(String testCase){
+        EGATestCase egaTestCase = null;
+        try {
+            egaTestCase = EGATestCase.valueOf(testCase);
+        } catch (IllegalArgumentException iae){
+            System.out.println("ERROR: " + testCase + " not recognised");
+        }
+        return egaTestCase;
+    }
 
-        EmissionsTestResult emissionsTestResult = RandomEGATestResultBuilder.aRandomEGATestResultBuilder().build();
+    public EmissionsTestResult simulateTest(Vehicle vehicle, EGATestCase egaTestCase){
+
+        EmissionsTestResult emissionsTestResult = getTestResult(egaTestCase);
 
         displayBanner();
         pause(500);
@@ -104,29 +114,8 @@ public class EGASimulator {
         System.out.println("EGA TEST RESULTS:");
         System.out.println();
         displayVehicleDetails(vehicle);
-        System.out.println("Engine Oil Temp: " + emissionsTestResult.getEngineOilTemperature());
-        System.out.println("Visible Smoke: " + emissionsTestResult.getVisibleSmoke());
-
-        if(emissionsTestResult.getFuelType() == EmissionsTestResult.FuelType.PETROL){
-            System.out.println("Idle RPM: " + emissionsTestResult.getIdleRPM());
-            System.out.println("Idle CO: " + emissionsTestResult.getIdleCO());
-            System.out.println();
-
-            System.out.println("Fast Idle RPM: " + emissionsTestResult.getFastIdleRPM());
-            System.out.println("Fast Idle CO: " + emissionsTestResult.getFastIdleCO());
-            System.out.println("Fast Idle HC: " + emissionsTestResult.getFastIdleHC());
-            System.out.println("Fast Idle Lambda: " + emissionsTestResult.getFastIdleLambda());
-
-            System.out.println();
-            System.out.println("Result: PASS");
-        } else {
-            System.out.println("Turbo: " + emissionsTestResult.getTurbo());
-            System.out.println("Opacity: " + emissionsTestResult.getOpacity());
-
-            System.out.println();
-            System.out.println("Result: PASS");
-        }
-
+        System.out.println("Engine Temp: " + emissionsTestResult.getEngineTempValue());
+        System.out.println("Overall Test Result " + emissionsTestResult.getOverallTestResult());
         System.out.println();
     }
 
@@ -144,4 +133,39 @@ public class EGASimulator {
             // Do Nothing
         }
     }
+
+    private EmissionsTestResult getTestResult(EGATestCase egaTestCase){
+        EmissionsTestResult emissionsTestResult = null;
+
+        if(egaTestCase != null) {
+            switch(egaTestCase){
+                case SPARKBET:
+                    emissionsTestResult = EGATestResultBuilder.anEGATestResultBuilder().withSparkBET().build();
+                    break;
+                case SPARKCAT:
+                    emissionsTestResult = EGATestResultBuilder.anEGATestResultBuilder().withSparkCAT().build();
+                    break;
+                case SPARKNONCAT:
+                    emissionsTestResult = EGATestResultBuilder.anEGATestResultBuilder().withSparkNonCAT().build();
+                    break;
+                case COMPRESSIONTURBO:
+                    emissionsTestResult = EGATestResultBuilder.anEGATestResultBuilder().withCompressionTurbo().build();
+                    break;
+                case COMPRESSIONFASTPASS:
+                    emissionsTestResult = EGATestResultBuilder.anEGATestResultBuilder().withCompressionFastPass().build();
+                    break;
+            }
+        }
+
+        return emissionsTestResult;
+    }
+
+    public enum EGATestCase {
+        SPARKBET,
+        SPARKCAT,
+        SPARKNONCAT,
+        COMPRESSIONFASTPASS,
+        COMPRESSIONTURBO
+    }
+
 }

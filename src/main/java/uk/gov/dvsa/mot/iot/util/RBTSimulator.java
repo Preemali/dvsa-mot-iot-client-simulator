@@ -2,12 +2,15 @@ package uk.gov.dvsa.mot.iot.util;
 
 import uk.gov.dvsa.mot.iot.client.data.BrakeTestResult;
 import uk.gov.dvsa.mot.iot.client.data.Vehicle;
+import uk.gov.dvsa.mot.iot.util.builderhelpers.RBTTestConditionBuilder;
 import uk.gov.dvsa.mot.iot.util.builderhelpers.RandomRBTResultBuilder;
 
 /**
  * Roller Brake Test simulator, used only for testing and demonstration purposes
  */
 public class RBTSimulator {
+
+    private int interval = 0;
 
     private RBTSimulator() {
     }
@@ -16,7 +19,22 @@ public class RBTSimulator {
         return new RBTSimulator();
     }
 
-    public BrakeTestResult simulateTest(Vehicle vehicle) {
+    public static RBTTestCase parseRBTTestCase(String testCase){
+        RBTTestCase rbtTestCase = null;
+        try {
+            rbtTestCase = RBTTestCase.valueOf(testCase);
+        } catch (IllegalArgumentException iae){
+            System.out.println("ERROR: " + testCase + " not recognised");
+        }
+        return rbtTestCase;
+    }
+
+    public RBTSimulator withInterval(int interval){
+        this.interval = interval;
+        return this;
+    }
+
+    public BrakeTestResult simulateTest(Vehicle vehicle, RBTTestCase rbtTestCase) {
 
         displayBanner();
 
@@ -26,30 +44,30 @@ public class RBTSimulator {
 
         displayStartTest();
 
-        BrakeTestResult brakeTestResult = RandomRBTResultBuilder.aRandomRBTResult().build();
+        BrakeTestResult brakeTestResult = getBrakeTestResult(rbtTestCase);
 
-        pause(500);
+        pause(interval);
 
         displayServiceBrake();
 
-        pause(500);
+        pause(interval);
         displayFrontAxle();
-        pause(500);
+        pause(interval);
         testing();
         results(brakeTestResult.getFrontService().getNearside(), brakeTestResult.getFrontService().getOffside());
 
         displayRearAxle();
-        pause(500);
+        pause(interval);
         testing();
         results(brakeTestResult.getRearService().getNearside(), brakeTestResult.getRearService().getOffside());
 
         displayParkingBrake();
 
-        pause(500);
+        pause(interval);
         testing();
         results(brakeTestResult.getRearParking().getNearside(), brakeTestResult.getRearParking().getOffside());
 
-        pause(500);
+        pause(interval);
         displayEndTest();
 
         displaySendingResults();
@@ -181,7 +199,7 @@ public class RBTSimulator {
     private void testing(){
         for (int i = 0; i < 10; i++) {
             System.out.print(".");
-            pause(500);
+            pause(interval);
         }
     }
 
@@ -191,5 +209,60 @@ public class RBTSimulator {
         } catch (InterruptedException ie){
             // Do Nothing
         }
+    }
+
+    private BrakeTestResult getBrakeTestResult(RBTTestCase rbtTestCase){
+        BrakeTestResult brakeTestResult = null;
+        if(rbtTestCase != null) {
+            switch (rbtTestCase) {
+                case SERVICEBRAKEPASS:
+                    brakeTestResult = RBTTestConditionBuilder.aBrakeTestConditionBuilder().withServiceBrakePass().build();
+                    break;
+                case SERVICEBRAKEFAILURE:
+                    brakeTestResult = RBTTestConditionBuilder.aBrakeTestConditionBuilder().withServiceBrakeFailure().build();
+                    break;
+                case SERVICEBRAKEDANGEROUSFAILURE:
+                    brakeTestResult = RBTTestConditionBuilder.aBrakeTestConditionBuilder().withServiceBrakeDangerousFailure().build();
+                    break;
+                case SERVICEBRAKEIMBALANCEFAILURE:
+                    brakeTestResult = RBTTestConditionBuilder.aBrakeTestConditionBuilder().withServiceBrakeImbalanceFailure().build();
+                    break;
+                case SERVICEBRAKEIMBALANCEDANGEROUSFAILURE:
+                    brakeTestResult = RBTTestConditionBuilder.aBrakeTestConditionBuilder().withServiceBrakeImbalanceDangerousFailure().build();
+                    break;
+                case PARKINGBRAKEFAILURE:
+                    brakeTestResult = RBTTestConditionBuilder.aBrakeTestConditionBuilder().withParkingBrakeFailure().build();
+                    break;
+                case PARKINGBRAKEDANGEROUSFAILURE:
+                    brakeTestResult = RBTTestConditionBuilder.aBrakeTestConditionBuilder().withParkingBrakeDangerousFailure().build();
+                    break;
+                case PARKINGBRAKEPASS:
+                    brakeTestResult = RBTTestConditionBuilder.aBrakeTestConditionBuilder().withParkingBrakePass().build();
+                    break;
+                case SERVICEBRAKEIMBALANCEFAILUREPARKINGBRAKEFAILURE:
+                    brakeTestResult = RBTTestConditionBuilder.aBrakeTestConditionBuilder().withServiceBrakeImbalanceFailureParkingBrakeFailure().build();
+                    break;
+                case SERVICEBRAKEPARKINGBRAKEPASS:
+                    brakeTestResult = RBTTestConditionBuilder.aBrakeTestConditionBuilder().withServiceBrakeParkingBrakePass().build();
+                    break;
+            }
+        } else {
+            brakeTestResult = RandomRBTResultBuilder.aRandomRBTResult().build();
+        }
+
+        return brakeTestResult;
+    }
+
+    public enum RBTTestCase {
+        SERVICEBRAKEPASS,
+        SERVICEBRAKEFAILURE,
+        SERVICEBRAKEDANGEROUSFAILURE,
+        SERVICEBRAKEIMBALANCEFAILURE,
+        SERVICEBRAKEIMBALANCEDANGEROUSFAILURE,
+        PARKINGBRAKEFAILURE,
+        PARKINGBRAKEDANGEROUSFAILURE,
+        PARKINGBRAKEPASS,
+        SERVICEBRAKEIMBALANCEFAILUREPARKINGBRAKEFAILURE,
+        SERVICEBRAKEPARKINGBRAKEPASS
     }
 }

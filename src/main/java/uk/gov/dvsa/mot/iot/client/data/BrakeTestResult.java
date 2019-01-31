@@ -2,13 +2,17 @@ package uk.gov.dvsa.mot.iot.client.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BrakeTestResult {
 
+    //RBT
     private BrakeTestType serviceBrakeTestType;
     private BrakeTestType parkingBrakeTestType;
     private VehicleWeightType vehicleWeightType;
@@ -16,6 +20,10 @@ public class BrakeTestResult {
     private BrakeLineType brakeLineType = BrakeLineType.DUAL;
     private List<BrakeEffort> serviceBrakeEfforts;
     private List<BrakeEffort> parkingBrakeEfforts;
+
+    //Decelerometer
+    private BigDecimal serviceBrakeEfficiency;
+    private BigDecimal parkingBrakeEfficiency;
 
     public BrakeTestType getServiceBrakeTestType() {
         return serviceBrakeTestType;
@@ -85,6 +93,22 @@ public class BrakeTestResult {
             this.parkingBrakeEfforts = new ArrayList<>();
         }
         this.parkingBrakeEfforts.add(parkingBrakeEffort);
+    }
+
+    public BigDecimal getServiceBrakeEfficiency() {
+        return serviceBrakeEfficiency;
+    }
+
+    public void setServiceBrakeEfficiency(BigDecimal serviceBrakeEfficiency) {
+        this.serviceBrakeEfficiency = serviceBrakeEfficiency;
+    }
+
+    public BigDecimal getParkingBrakeEfficiency() {
+        return parkingBrakeEfficiency;
+    }
+
+    public void setParkingBrakeEfficiency(BigDecimal parkingBrakeEfficiency) {
+        this.parkingBrakeEfficiency = parkingBrakeEfficiency;
     }
 
     @JsonIgnore
