@@ -41,8 +41,23 @@ for a Roller Brake Test are provided
 
    Repeat for each piece of connected equipment (RBT, EGA, OBD etc)
    
-7. Test results are combined and sent to MTS as a JSON [Response](etc/WorkOrderResponse.json) message.
+7. Test results are sent to MTS as a JSON [Response](etc/WorkOrderResponse.json) message.
 8. Tester completes visual inspection of vehicle and returns to MTS to enter test results.
 9. Tester resumes test and data from connected equipment (RBT) is already present in MTS.
 10. Complete test.
+
+### Client Deployment Options
+
+There are multiple supported ways to deploy a client within an MOT Testing station.
+
+![Single Client](/etc/Single_Client.jpeg)
+
+With the Single Client approach a single api client acts as a workshop manager and will be responsible for communicating with
+each piece of connected equipment and sending the test results to the MTS api. Test results may be combined and sent together 
+or sent individually as they are received.
+
+![Multiple Clients](/etc/Multiple_Clients.jpeg)
+
+With the Multiple Client approach, each piece of connected equipment will connect directly to the MTS api and send its results
+independently.
 
