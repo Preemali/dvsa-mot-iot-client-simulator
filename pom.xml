@@ -80,7 +80,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.6.0</version>
                 <configuration>
-                    <mainClass>uk.gov.dvsa.mot.iot.RBTSimulator</mainClass>
+                    <mainClass>uk.gov.dvsa.mot.iot.ConnectedEquipmentSimulator</mainClass>
                 </configuration>
             </plugin>
         </plugins>
