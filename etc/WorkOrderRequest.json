@@ -1,10 +1,13 @@
 {
-  "siteNumber": "rbt-simulator",
-  "testNumber": "1",
+  "siteNumber": "clientXX",
+  "testNumber": "10000001",
   "vehicle": {
     "make": "Ford",
     "model": "Capri 3.0S",
     "vrm": "ABC 123M",
-    "vin": "12345678901234567"
+    "vin": "12345678901234567",
+    "fuelType": "PETROL",
+    "firstRegistrationDate": "1974-06-20",
+    "vehicleClass": "4"
   }
 }
