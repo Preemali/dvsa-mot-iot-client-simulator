@@ -1,19 +1,20 @@
 {
-  "siteNumber": "rbt-simulator",
+  "siteNumber": "clientXX",
   "testNumber": 1,
-  "workOrderState": "COMPLETE",
   "vehicle": {
     "make": "Ford",
     "model": "Capri 3.0S",
     "vrm": "ABC 123M",
-    "vin": "12345678901234567"
+    "vin": "12345678901234567",
+    "fuelType": "PETROL",
+    "firstRegistrationDate": "1974-06-20",
+    "vehicleClass": "4"
   },
   "brakeTestResult": {
     "serviceBrakeTestType": "ROLLER",
     "parkingBrakeTestType": "ROLLER",
     "vehicleWeightType": "PRESENTED",
     "vehicleWeightKg": 1503,
-    "brakeLineType": "DUAL",
     "serviceBrakeEfforts": [{
       "axleNumber": 1,
       "nearside": 491,
@@ -36,19 +37,37 @@
     }]
   },
   "emissionsTestResult": {
-    "catalyst": true,
-    "engineOilTemperature": 101,
-    "fastIdleCO": 0.05,
-    "fastIdleHC": 17,
-    "fastIdleLambda": 1.003,
-    "fastIdleRPM": 2600,
-    "fuelType": "PETROL",
-    "idleCO": 0.02,
-    "idleRPM": 950,
-    "opacity": null,
-    "turbo": null,
-    "visibleSmoke": false
-  },
+     "vehicleFuelType": "PETROL",
+     "startDateTime": "2019-05-31T10:07:57.687",
+     "engineTempMinLimit": 40,
+     "engineTempValue": 50,
+     "engineTempTestResult": "PASS",
+     "sparkTestResult": {
+       "testType": "BET",
+       "fastIdleMinRPMLimit": 2500,
+       "fastIdleMaxRPMLimit": 3000,
+       "fastIdleRPMValue": 2760,
+       "fastIdleRPMTestResult": "PASS",
+       "fastIdleMaxCOLimit": 0.200,
+       "fastIdleCOValue": 0.140,
+       "fastIdleCOTestResult": "PASS",
+       "fastIdleMaxHCLimit": 200,
+       "fastIdleHCValue": 200,
+       "fastIdleMinLambdaLimit": 0.970,
+       "fastIdleMaxLambdaLimit": 1.030,
+       "fastIdleLambdaValue": 1.000,
+       "fastIdleLambdaTestResult": "PASS",
+       "naturalIdleMinRPMLimit": 450,
+       "naturalIdleMaxRPMLimit": 1500,
+       "naturalIdleRPMValue": 960,
+       "naturalIdleRPMTestResult": "PASS",
+       "naturalIdleMaxCOLimit": 0.300,
+       "naturalIdleCOValue": 0.140,
+       "naturalIdleCOTestResult": "PASS"
+     },
+     "limitsUsed": "DEFAULT",
+     "overallTestResult": "PASSED"
+ },
   "obdTestResult": {
     "boostPressureMonitorStatus": "NOT_READY",
     "catalystMonitorStatus": "NOT_AVAILABLE",
