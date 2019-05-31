@@ -13,8 +13,11 @@ to <ProjectRoot>/src/main/resources/uk/gov/dvsa/mot/iot/util. Update the PROPERT
 to match the issued property filename and then run ConnectedEquipmentSimulator.
 
 To build and run the example you will need Java\(8+\) and Maven\(3+\) installed.
+
 To build the code from the command line use **mvn clean install**
+
 To execute the code from the command line **mvn exec:java [-Dexec.args="OBD|RBT|EGA|DECEL|ALL"]** e.g to execute the RBT Simulator use **mvn exec:java -Dexec.args="RBT"**
+
 \*It is recommended that you execute the code in your IDE so you can step through it in the debugger.
 
 A Demo of the RBT Simulator being used with PostMan can be found at https://www.youtube.com/watch?v=P7RDE0PJdik
